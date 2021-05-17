@@ -1,4 +1,4 @@
-package controller;
+package com.example.fileUpload.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,7 +13,7 @@ import java.nio.file.Paths;
 
 @Controller
 public class FileUploadController {
-    public static String uploadDirectory = System.getProperty("user.dir") + "/uploads";
+    public static String uploadDirectory = System.getProperty("user.dir") + "/src/main/resources/uploads";
 
     @RequestMapping("/")
     public String UploadPage(Model model) {
