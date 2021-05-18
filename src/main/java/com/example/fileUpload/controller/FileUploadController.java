@@ -6,15 +6,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
+import static com.example.fileUpload.service.Service.*;
 
 @Controller
 public class FileUploadController {
-    public static String uploadDirectory = System.getProperty("user.dir") + "/src/main/resources/uploads";
-
+    public static final String viewDirectory = System.getProperty("user.dir") + "/src/main/resources/uploads";
     @RequestMapping("/")
     public String UploadPage(Model model) {
         return "uploadView";
@@ -22,18 +18,12 @@ public class FileUploadController {
 
     @RequestMapping("/upload")
     public String Upload(Model model, @RequestParam("files") MultipartFile[] files) {
-        StringBuilder fileNames = new StringBuilder();
-        for (MultipartFile file:
-             files) {
-            Path fileNameAndPath= Paths.get(uploadDirectory, file.getOriginalFilename());
-            fileNames.append(file.getOriginalFilename()).append(" ");
-            try {
-                Files.write(fileNameAndPath, file.getBytes());
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+        if(isCorrectFormat(files) && isCorrectSize(files)) {
+            String fileNames = uploadFiles(files).toString();
+            model.addAttribute("msg", "Successfully uploaded files: " + fileNames);
+            return "uploadStatusView";
+        }else {
+            return "Error";
         }
-        model.addAttribute("msg", "Successfully uploaded files: " + fileNames.toString());
-        return "uploadStatusView";
     }
 }

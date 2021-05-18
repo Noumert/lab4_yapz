@@ -5,13 +5,40 @@
     <title>Title</title>
 </head>
 <body>
-
+<script>
+    function addTag(name){
+    a = document.getElementById(name).value;
+    var xhr = new XMLHttpRequest();
+    xhr.open("POST", "/view", true);
+    xhr.setRequestHeader('Content-Type', 'application/json');
+    data = JSON.stringify({
+    "name" : name,
+    "tags" : a
+    });
+    alert(data);
+    xhr.send(data);
+    }
+</script>
 <div th:each ="file : ${files}">
-    <img th:src="${file}" width="200px" height="200px">
-    <h4 th:text="${file}"></h4>
+    <img th:if="${file.type == 'image'}"  width="300px" th:src="${file.name}">
+    <video th:unless="${file.type == 'image'}" width="320" height="240" controls>
+        <source th:src="${file.name}"  type="video/mp4">
+        <source th:src="${file.name}"  type="video/quicktime">
+        <source th:src="${file.name}"  type="video/avi">
+        <source th:src="${file.name}"  type="video/webm">
+    </video>
+    <h4 th:text="${file.name}"></h4>
+    <span th:each ="tag :${file.tags}">
+        <span th:text="${tag} "></span>
+    </span>
+    <br>
+    <textarea placeholder="no more then 200 tags" th:id="${file.name}"></textarea>
+    <button th:data-name="${file.name}" th:data-tags th:onclick="addTag(this.getAttribute('data-name'))">add Tag</button>
 </div>
 <div>
     <span><a href="/">Upload More</a></span>
 </div>
 </body>
 </html>
+<!--th:if="${file.type == 'image'}"-->
+<!--th:unless="${file.type == 'image'}"-->
