@@ -17,12 +17,12 @@ public class Service {
 
     public static String uploadDirectory = System.getProperty("user.dir") + "/src/main/resources/uploads";
 
-    public static double getMFileSizeMegaBytes(MultipartFile file) {
-        return (double) file.getSize() / (1024 * 1024);
+    public static long getMFileSizeMegaBytes(MultipartFile file) {
+        return (long) file.getSize() / (1024 * 1024);
     }
 
-    public static double getMFileSizeKiloBytes(MultipartFile file) {
-        return (double) file.getSize() / 1024;
+    public static long getMFileSizeKiloBytes(MultipartFile file) {
+        return (long) file.getSize() / 1024;
     }
 
     public static String getFileMFormat(MultipartFile file) {

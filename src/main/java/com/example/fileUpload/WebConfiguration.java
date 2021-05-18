@@ -12,6 +12,8 @@ public class WebConfiguration extends WebMvcConfigurationSupport {
     public void addResourceHandlers(ResourceHandlerRegistry registry){
         registry.addResourceHandler("**")
                 .addResourceLocations("file:" + path);
+        registry.addResourceHandler("view/**")
+                .addResourceLocations("file:" + path);
 //        registry.addResourceHandler("**")
 //                .addResourceLocations("file:" + json);
     }

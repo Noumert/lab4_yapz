@@ -15,10 +15,13 @@
     "name" : name,
     "tags" : a
     });
-    alert(data);
     xhr.send(data);
     }
 </script>
+<form action="/view/search" method="post">
+    <input type="text" id="search" hidden name="search">
+    <input id="submit" type="submit" value="search">
+</form>
 <div th:each ="file : ${files}">
     <img th:if="${file.type == 'image'}"  width="300px" th:src="${file.name}">
     <video th:unless="${file.type == 'image'}" width="320" height="240" controls>
@@ -29,11 +32,11 @@
     </video>
     <h4 th:text="${file.name}"></h4>
     <span th:each ="tag :${file.tags}">
-        <span th:text="${tag} "></span>
+        <span class="tag" th:text="${tag} "></span>
     </span>
     <br>
     <textarea placeholder="no more then 200 tags" th:id="${file.name}"></textarea>
-    <button th:data-name="${file.name}" th:data-tags th:onclick="addTag(this.getAttribute('data-name'))">add Tag</button>
+    <button th:data-name="${file.name}" th:class="${file.name}" th:data-tags th:onclick="addTag(this.getAttribute('data-name'))">add Tag</button>
 </div>
 <div>
     <span><a href="/">Upload More</a></span>
